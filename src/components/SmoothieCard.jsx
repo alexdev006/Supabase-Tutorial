@@ -1,34 +1,19 @@
 import { Link } from "react-router-dom";
-import supabase from "../config/supabaseClient";
 
-const SmoothieCard = ({ smoothie, onDelete }) => {
-  const handleDelete = async () => {
-    const { data, error } = await supabase
-      .from("smoothies")
-      .delete()
-      .eq("id", smoothie.id)
-      .select();
-
-    if (error) {
-      console.log(error);
-    }
-
-    if (data) {
-      console.log(data);
-      onDelete(smoothie.id);
-    }
-  };
-
+const SmoothieCard = ({
+  smoothie: { id, title, method, rating },
+  onDelete,
+}) => {
   return (
     <div className="smoothie-card">
-      <h3>{smoothie.title}</h3>
-      <p>{smoothie.method}</p>
-      <div className="rating">{smoothie.rating} </div>
+      <h3>{title}</h3>
+      <p>{method}</p>
+      <div className="rating">{rating} </div>
       <div className="buttons">
-        <Link to={"/" + smoothie.id}>
+        <Link to={"/" + id}>
           <i className="material-icons">edit</i>
         </Link>
-        <i className="material-icons" onClick={handleDelete}>
+        <i className="material-icons" onClick={() => onDelete(id)}>
           delete
         </i>
       </div>
