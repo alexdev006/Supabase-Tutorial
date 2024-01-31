@@ -1,42 +1,8 @@
-import { useEffect, useState, useCallback } from "react";
-
+import { useSupabase } from "../api/useSupabase";
 import SmoothieCard from "../components/SmoothieCard";
-import supabase from "../config/supabaseClient";
 
 const Home = () => {
-  const [{ error, data }, setState] = useState({ data: null, error: null });
-  const [orderBy, setOrderBy] = useState("created_at");
-
-  const fetchData = useCallback(
-    () =>
-      supabase
-        .from("smoothies")
-        .select()
-        .order(orderBy, { ascending: false })
-        .then((result) => {
-          console.log(result);
-          setState(result);
-        }),
-    [orderBy]
-  );
-
-  const handleChangeOrderBy = (newOrder) => {
-    setOrderBy(() => newOrder);
-    fetchData();
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-
-  const onDelete = (id) =>
-    supabase
-      .from("smoothies")
-      .delete()
-      .eq("id", id)
-      .select()
-      .then(() => fetchData())
-      .finally(() => alert(error ? "error" : "success"));
+  const { handleChangeOrderBy, orderBy, error, data, onDelete } = useSupabase();
 
   if (error) return <p>there is an error muther fucker !</p>;
 
