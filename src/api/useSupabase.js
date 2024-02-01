@@ -1,26 +1,20 @@
-import { useCallback, useState, useEffect } from "react";
 import { deleteSmoothy, getSmoothies } from "./api";
+import { useCallback, useEffect, useState } from "react";
 
 export const useSupabase = () => {
   const [{ error, data }, setState] = useState({ data: null, error: null });
-  const [orderBy, setOrderBy] = useState("created_at");
 
   const fetchData = useCallback(
-    () =>
-      getSmoothies(orderBy).then((result) => {
-        console.log(result);
-        setState(result);
-      }),
-    [orderBy]
+    (orderBy) => getSmoothies(orderBy).then((result) => setState(result)),
+    []
   );
 
   const handleChangeOrderBy = (newOrder) => {
-    setOrderBy(() => newOrder);
-    fetchData();
+    fetchData(newOrder);
   };
 
   useEffect(() => {
-    fetchData();
+    fetchData("created_at");
   }, [fetchData]);
 
   const onDelete = (id) =>
@@ -33,6 +27,5 @@ export const useSupabase = () => {
     handleChangeOrderBy,
     error,
     data,
-    orderBy,
   };
 };

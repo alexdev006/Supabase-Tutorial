@@ -1,13 +1,14 @@
-import { useSupabase } from "../api/useSupabase";
 import SmoothieCard from "../components/SmoothieCard";
+import { useSupabase } from "../api/useSupabase";
 
 const Home = () => {
-  const { handleChangeOrderBy, orderBy, error, data, onDelete } = useSupabase();
+  const { handleChangeOrderBy, error, data, onDelete } = useSupabase();
 
   if (error) return <p>there is an error muther fucker !</p>;
 
   return (
     <div className="page home">
+      {JSON.stringify(process.env)}
       <div className="smoothies">
         <div className="order-by">
           <p>order by:</p>
@@ -16,7 +17,6 @@ const Home = () => {
           </button>
           <button onClick={() => handleChangeOrderBy("title")}>Title</button>
           <button onClick={() => handleChangeOrderBy("rating")}>Rating</button>
-          {orderBy}
         </div>
         <div className="smoothie-grid">
           {data?.length === 0 && "no data"}
