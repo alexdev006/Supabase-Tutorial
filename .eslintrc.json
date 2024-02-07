@@ -17,6 +17,7 @@
   },
   "plugins": ["react", "react-hooks"],
   "rules": {
-    //add customize rules here as per your project's needs
+    //avoid mandatory React import
+    "react/react-in-jsx-scope": "off"
   }
 }

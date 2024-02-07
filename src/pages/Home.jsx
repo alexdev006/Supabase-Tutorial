@@ -8,7 +8,6 @@ const Home = () => {
 
   return (
     <div className="page home">
-      {JSON.stringify(process.env)}
       <div className="smoothies">
         <div className="order-by">
           <p>order by:</p>
