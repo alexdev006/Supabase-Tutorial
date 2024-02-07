@@ -5,11 +5,12 @@ export const useSupabase = () => {
   const [{ error, data }, setState] = useState({ data: null, error: null });
 
   const fetchData = useCallback(
-    (orderBy) => getSmoothies(orderBy).then((result) => setState(result)),
+    (orderBy: string) =>
+      getSmoothies(orderBy).then((result) => setState(result)),
     []
   );
 
-  const handleChangeOrderBy = (newOrder) => {
+  const handleChangeOrderBy = (newOrder: string) => {
     fetchData(newOrder);
   };
 
@@ -17,7 +18,7 @@ export const useSupabase = () => {
     fetchData("created_at");
   }, [fetchData]);
 
-  const onDelete = (id) =>
+  const onDelete = (id: string) =>
     deleteSmoothy(id)
       .then(() => fetchData())
       .finally(() => alert(error ? "error" : "success"));
